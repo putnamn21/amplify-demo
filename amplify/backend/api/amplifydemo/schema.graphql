@@ -1,0 +1,45 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    getUserConfig: [UserConfig]
+}
+
+type Mutation {
+    addUserConfig(iid: ID!, userId: String!, name: String!, active: Boolean!, startDate: String!, endDate: String!, weeklyWaterAmount: Float!)
+}
+
+type UserConfig @model {
+    id: ID!
+    userId: ID! @index(name: "byUser", sortKeyFields: ["id"])
+    name: String!
+    active: Boolean!
+    startDate: String!
+    endDate: String!
+    weeklyWaterAmount: Float!
+    daySettings: [DaySetting] @connection(name: "DaySettings")
+    zones: [ZoneConfiguration] @connection(name: "Zones")
+}
+
+type DaySetting @model {
+    id: ID! #day of week
+    userConfig: UserConfig! @connection(name: "UserConfig")
+    active: Boolean! @default(value: false)
+    startTime: AWSTime
+    zones: [Zones] @connection(name: "DayRunZones")
+}
+
+type Zones @model{
+    id: ID!
+    userConfig: UserConfig! @connection(name: "UserConfig")
+    zoneNumber: Int!
+    runDuration: Int! @default(value: 0)
+    order: Int! @default(value: 0)
+    daySettings: [DaySetting] @connection(name: "ZoneRunDays")
+}
+
+#Need to account for how we save the day before forcast
+
+#Need to account for how we save the weekly rainfall total and history
