@@ -1,44 +1,41 @@
-schema {
-    query: Query
-    mutation: Mutation
-}
-
-type Query {
-    getUserConfig: [UserConfig]
-}
-
-type Mutation {
-    addUserConfig(iid: ID!, userId: String!, name: String!, active: Boolean!, startDate: String!, endDate: String!, weeklyWaterAmount: Float!)
-}
-
-type UserConfig @model {
-    id: ID!
-    userId: ID! @index(name: "byUser", sortKeyFields: ["id"])
+#Top level object that allows you to create different configruations for different times. I.E. spring v summer v new seed
+type SprinklerProfile @model 
+@auth(rules: [{ allow: owner, ownerField: "owner"}, {allow: groups, groups: ["Admin"]}]) 
+{
     name: String!
-    active: Boolean!
-    startDate: String!
-    endDate: String!
-    weeklyWaterAmount: Float!
-    daySettings: [DaySetting] @connection(name: "DaySettings")
-    zones: [ZoneConfiguration] @connection(name: "Zones")
+    active: Boolean! #only one will be active at a time
+    weeklyWaterAmount: Float! #used during rain checks, if we hit target for a week we wont run
+    daySettings: [DaySetting] @hasMany
+    zoneSettings: [ZoneSetting] @hasMany
+    owner: String! @index(name: "byOwner", queryField: "sprinklerProfileByOwner")
 }
 
-type DaySetting @model {
-    id: ID! #day of week
-    userConfig: UserConfig! @connection(name: "UserConfig")
-    active: Boolean! @default(value: false)
-    startTime: AWSTime
-    zones: [Zones] @connection(name: "DayRunZones")
+#Zones will never change, once they are set up they are universal for everything else
+type Zone @model 
+@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]){
+    id: ID! 
+    zoneNumber: Int! #ties to the actual switch
+    name: String!
+    description: String
 }
 
-type Zones @model{
-    id: ID!
-    userConfig: UserConfig! @connection(name: "UserConfig")
-    zoneNumber: Int!
-    runDuration: Int! @default(value: 0)
-    order: Int! @default(value: 0)
-    daySettings: [DaySetting] @connection(name: "ZoneRunDays")
+type DaySetting @model 
+@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]) {
+    day: DayOfWeek!
+    active: Boolean! @default(value: "false")
+    startTime: AWSTime!
+    zoneSettings: [ZoneSetting] @manyToMany(relationName: "ZoneDays") 
 }
+
+type ZoneSetting @model
+@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]) 
+{
+    zone: Zone! @hasOne #the zone that should be run
+    runMinutes: Int! #how long it should run
+    daySettings: [DaySetting] @manyToMany(relationName: "ZoneDays") 
+}
+
+enum DayOfWeek {mon,tue,wed,thu,fri,sat,sun}
 
 #Need to account for how we save the day before forcast
 
