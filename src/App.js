@@ -7,7 +7,7 @@ import {
   View
 } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css';
-import ConfigurationList from './containers/ConfigurationList'
+import ProfileList from './containers/ProfileList'
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
                 as="main"
                 flex="1 1 auto"
                 padding="1rem">
-                  <ConfigurationList user={user}/>
+                  <ProfileList user={user}/>
               </View>
               <Flex as="footer" padding="1rem" backgroundColor="var(--amplify-tertiary-color)">
                 Im a footer

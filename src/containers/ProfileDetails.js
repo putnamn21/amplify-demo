@@ -6,17 +6,13 @@ import {
 export default function ConfigDetails({
     name,
     active,
-    startDate,
-    endDate,
     weeklyWaterAmount,
     daySettings,
-    zones
+    zoneSettings
 }){
     return(
         <View padding="1rem">
             <Text>Active: {active ? "Yes": "No"}</Text>
-            <Text>Start Date: {startDate}</Text>
-            <Text>End Date: {endDate}</Text>
             <Text>Weekly Amount: {weeklyWaterAmount}</Text>
         </View>
     )
