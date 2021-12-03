@@ -31,6 +31,7 @@ body {
   --amplify-light-grey:	#c4c4c4;
   --amplify-white:	#ffffff;
   --amplify-red:	#dd3f5b;
+  --amplify-components-field-gap: 1rem
 }
 
 code {
