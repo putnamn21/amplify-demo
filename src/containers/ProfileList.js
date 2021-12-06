@@ -22,7 +22,7 @@ export default function ProfileList() {
                 <Button onClick={() => navigate('/AddSprinklerProfile')}>
                     Add Sprinkler Profile
                 </Button>
-                <Button>
+                <Button onClick={() => navigate('/ManageZones')}>
                     Add Zone
                 </Button>
             </Flex>
