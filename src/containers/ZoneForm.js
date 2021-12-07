@@ -1,28 +1,28 @@
+import { useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import {
     TextField,
-    CheckboxField,
     Button,
     Flex,
     Heading,
     Loader
 } from '@aws-amplify/ui-react'
 
-export default function ZoneForm({ zone }) {
-    console.log(zone)
-    const { register, handleSubmit, formState, control, getValues } = useForm({
-        defaultValues: {
-            ...zone
-        }
-    })
-
-    async function onSubmit(data) {
+export default function ZoneForm({ zone, isNew, handleUpdateZone, handleSaveZone }) {
+    const { register, handleSubmit, formState, reset } = useForm()
+    const onSubmit = async (data) => {
         try {
-            console.log(data)
+            await isNew ? handleSaveZone(data) : handleUpdateZone(data)
         } catch (e) {
             console.log(e)
         }
     }
+
+    //watch for change in zone and reset form?
+    useEffect(() => {
+        console.log('zone changed, resetting form', zone.zoneNumber)
+        reset(zone)
+    }, [zone, reset])
 
     return (
         <Flex
@@ -37,9 +37,8 @@ export default function ZoneForm({ zone }) {
             <Flex justifyContent="space-between" alignItems="center">
                 <Heading level={5}>Zone {zone.zoneNumber}</Heading>
                 <Flex wrap="nowrap" alignItems="center">
-                    <CheckboxField label="Active" {...register('active')} defaultChecked />
-                    {formState.isDirty && <Button type="submit">Save</Button>}
-                    <Button size="small" onClick={() => { }}>Delete</Button>
+                    {(formState.isDirty || isNew) && <Button size="small" type="submit" disabled={formState.isSubmitting}> {formState.isSubmitting ? <Loader /> : 'Save'}</Button>}
+                    {(formState.isDirty && <Button size="small" onClick={() => reset(zone)}>Cancel</Button>)}
                 </Flex>
             </Flex>
             <TextField

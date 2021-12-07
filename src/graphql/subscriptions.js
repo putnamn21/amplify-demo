@@ -15,14 +15,10 @@ export const onCreateSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileDaySettingsId
           owner
         }
         nextToken
-        startedAt
       }
       zoneSettings {
         items {
@@ -30,23 +26,16 @@ export const onCreateSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileZoneSettingsId
           zoneSettingZoneId
           owner
         }
         nextToken
-        startedAt
       }
       owner
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -64,14 +53,10 @@ export const onUpdateSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileDaySettingsId
           owner
         }
         nextToken
-        startedAt
       }
       zoneSettings {
         items {
@@ -79,23 +64,16 @@ export const onUpdateSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileZoneSettingsId
           zoneSettingZoneId
           owner
         }
         nextToken
-        startedAt
       }
       owner
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -113,14 +91,10 @@ export const onDeleteSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileDaySettingsId
           owner
         }
         nextToken
-        startedAt
       }
       zoneSettings {
         items {
@@ -128,23 +102,16 @@ export const onDeleteSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileZoneSettingsId
           zoneSettingZoneId
           owner
         }
         nextToken
-        startedAt
       }
       owner
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -157,9 +124,6 @@ export const onCreateZone = /* GraphQL */ `
       description
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -173,9 +137,6 @@ export const onUpdateZone = /* GraphQL */ `
       description
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -189,9 +150,6 @@ export const onDeleteZone = /* GraphQL */ `
       description
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -209,20 +167,13 @@ export const onCreateDaySetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileDaySettingsId
       owner
     }
@@ -241,20 +192,13 @@ export const onUpdateDaySetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileDaySettingsId
       owner
     }
@@ -273,20 +217,13 @@ export const onDeleteDaySetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileDaySettingsId
       owner
     }
@@ -302,9 +239,6 @@ export const onCreateZoneSetting = /* GraphQL */ `
         description
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       runMinutes
@@ -315,20 +249,13 @@ export const onCreateZoneSetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileZoneSettingsId
       zoneSettingZoneId
       owner
@@ -345,9 +272,6 @@ export const onUpdateZoneSetting = /* GraphQL */ `
         description
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       runMinutes
@@ -358,20 +282,13 @@ export const onUpdateZoneSetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileZoneSettingsId
       zoneSettingZoneId
       owner
@@ -388,9 +305,6 @@ export const onDeleteZoneSetting = /* GraphQL */ `
         description
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       runMinutes
@@ -401,20 +315,13 @@ export const onDeleteZoneSetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileZoneSettingsId
       zoneSettingZoneId
       owner
@@ -433,14 +340,10 @@ export const onCreateZoneDays = /* GraphQL */ `
         startTime
         zoneSettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileDaySettingsId
         owner
       }
@@ -452,31 +355,21 @@ export const onCreateZoneDays = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         runMinutes
         daySettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileZoneSettingsId
         zoneSettingZoneId
         owner
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -493,14 +386,10 @@ export const onUpdateZoneDays = /* GraphQL */ `
         startTime
         zoneSettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileDaySettingsId
         owner
       }
@@ -512,31 +401,21 @@ export const onUpdateZoneDays = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         runMinutes
         daySettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileZoneSettingsId
         zoneSettingZoneId
         owner
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -553,14 +432,10 @@ export const onDeleteZoneDays = /* GraphQL */ `
         startTime
         zoneSettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileDaySettingsId
         owner
       }
@@ -572,31 +447,21 @@ export const onDeleteZoneDays = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         runMinutes
         daySettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileZoneSettingsId
         zoneSettingZoneId
         owner
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }

@@ -15,14 +15,10 @@ export const getSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileDaySettingsId
           owner
         }
         nextToken
-        startedAt
       }
       zoneSettings {
         items {
@@ -30,23 +26,16 @@ export const getSprinklerProfile = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileZoneSettingsId
           zoneSettingZoneId
           owner
         }
         nextToken
-        startedAt
       }
       owner
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -67,60 +56,16 @@ export const listSprinklerProfiles = /* GraphQL */ `
         weeklyWaterAmount
         daySettings {
           nextToken
-          startedAt
         }
         zoneSettings {
           nextToken
-          startedAt
         }
         owner
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncSprinklerProfiles = /* GraphQL */ `
-  query SyncSprinklerProfiles(
-    $filter: ModelSprinklerProfileFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncSprinklerProfiles(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        name
-        active
-        weeklyWaterAmount
-        daySettings {
-          nextToken
-          startedAt
-        }
-        zoneSettings {
-          nextToken
-          startedAt
-        }
-        owner
-        id
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -133,9 +78,6 @@ export const getZone = /* GraphQL */ `
       description
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -154,43 +96,9 @@ export const listZones = /* GraphQL */ `
         description
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncZones = /* GraphQL */ `
-  query SyncZones(
-    $filter: ModelZoneFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncZones(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        zoneNumber
-        name
-        description
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -207,20 +115,13 @@ export const getDaySetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileDaySettingsId
       owner
     }
@@ -239,54 +140,14 @@ export const listDaySettings = /* GraphQL */ `
         startTime
         zoneSettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileDaySettingsId
         owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncDaySettings = /* GraphQL */ `
-  query SyncDaySettings(
-    $filter: ModelDaySettingFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncDaySettings(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        day
-        active
-        startTime
-        zoneSettings {
-          nextToken
-          startedAt
-        }
-        id
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        sprinklerProfileDaySettingsId
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -300,9 +161,6 @@ export const getZoneSetting = /* GraphQL */ `
         description
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       runMinutes
@@ -313,20 +171,13 @@ export const getZoneSetting = /* GraphQL */ `
           zoneSettingID
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         nextToken
-        startedAt
       }
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       sprinklerProfileZoneSettingsId
       zoneSettingZoneId
       owner
@@ -348,74 +199,20 @@ export const listZoneSettings = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         runMinutes
         daySettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileZoneSettingsId
         zoneSettingZoneId
         owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncZoneSettings = /* GraphQL */ `
-  query SyncZoneSettings(
-    $filter: ModelZoneSettingFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncZoneSettings(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        zone {
-          id
-          zoneNumber
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        runMinutes
-        daySettings {
-          nextToken
-          startedAt
-        }
-        id
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        sprinklerProfileZoneSettingsId
-        zoneSettingZoneId
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -431,14 +228,10 @@ export const getZoneDays = /* GraphQL */ `
         startTime
         zoneSettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileDaySettingsId
         owner
       }
@@ -450,31 +243,21 @@ export const getZoneDays = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           owner
         }
         runMinutes
         daySettings {
           nextToken
-          startedAt
         }
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         sprinklerProfileZoneSettingsId
         zoneSettingZoneId
         owner
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -497,9 +280,6 @@ export const listZoneDays = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileDaySettingsId
           owner
         }
@@ -508,76 +288,15 @@ export const listZoneDays = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           sprinklerProfileZoneSettingsId
           zoneSettingZoneId
           owner
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncZoneDays = /* GraphQL */ `
-  query SyncZoneDays(
-    $filter: ModelZoneDaysFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncZoneDays(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        daySettingID
-        zoneSettingID
-        daySetting {
-          day
-          active
-          startTime
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          sprinklerProfileDaySettingsId
-          owner
-        }
-        zoneSetting {
-          runMinutes
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          sprinklerProfileZoneSettingsId
-          zoneSettingZoneId
-          owner
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -602,22 +321,16 @@ export const sprinklerProfileByOwner = /* GraphQL */ `
         weeklyWaterAmount
         daySettings {
           nextToken
-          startedAt
         }
         zoneSettings {
           nextToken
-          startedAt
         }
         owner
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
