@@ -59,7 +59,7 @@ export default function SprinklerProfileForm() {
                     return (
                         <Flex as="section" direction="column" key={field.id}>
                             <Flex justifyContent="space-between" alignContent="center">
-                                <Heading level={5}>{day} <TextField {...register("day")} type="hidden" /></Heading>
+                                <Heading level={5}>{day}</Heading>
                                 <Flex wrap="nowrap" alignContent="center">
                                     <CheckboxField label="Active" {...register(`daySettings.${index}.active`)} />
                                     <Button size="small" onClick={() => remove(index)}>Delete</Button>

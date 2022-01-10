@@ -1,41 +1,60 @@
 #Top level object that allows you to create different configruations for different times. I.E. spring v summer v new seed
-type SprinklerProfile @model 
-@auth(rules: [{ allow: owner, ownerField: "owner"}, {allow: groups, groups: ["Admin"]}]) 
-{
-    name: String!
-    active: Boolean! #only one will be active at a time
-    weeklyWaterAmount: Float! #used during rain checks, if we hit target for a week we wont run
-    daySettings: [DaySetting] @hasMany
-    zoneSettings: [ZoneSetting] @hasMany
-    owner: String! @index(name: "byOwner", queryField: "sprinklerProfileByOwner")
+type SprinklerProfile
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "owner" }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  name: String!
+  active: Boolean! #only one will be active at a time
+  daySettings: [DaySetting] @hasMany
+  zoneSettings: [ZoneSetting] @hasMany
+  owner: String! @index(name: "byOwner", queryField: "sprinklerProfileByOwner")
 }
 
 #Zones will never change, once they are set up they are universal for everything else
-type Zone @model 
-@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]){
-    id: ID! 
-    zoneNumber: Int! #ties to the actual switch
-    name: String!
-    description: String
+type Zone
+  @model
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  id: ID!
+  zoneNumber: Int! #ties to the actual switch
+  name: String!
+  description: String
 }
 
-type DaySetting @model 
-@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]) {
-    day: DayOfWeek!
-    active: Boolean! @default(value: "false")
-    startTime: AWSTime!
-    zoneSettings: [ZoneSetting] @manyToMany(relationName: "ZoneDays") 
+#Detirmines which days the profile runs and which zones run on the day, including the start time and how many runs they do
+type DaySetting
+  @model
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  day: DayOfWeek!
+  active: Boolean! @default(value: "false")
+  startTime: AWSTime!
+  zoneSettings: [ZoneSetting] @manyToMany(relationName: "ZoneDays")
 }
 
-type ZoneSetting @model
-@auth(rules: [{ allow: owner }, {allow: groups, groups: ["Admin"]}]) 
-{
-    zone: Zone! @hasOne #the zone that should be run
-    runMinutes: Int! #how long it should run
-    daySettings: [DaySetting] @manyToMany(relationName: "ZoneDays") 
+#Certain profiles may have only certain zones run, and for a specific duration
+type ZoneSetting
+  @model
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  zone: Zone! @hasOne #the zone that should be run
+  runMinutes: Int! #how long it should run
+  runCycles: Int! #how many times it runs in a day
+  targetInches: Float! #used during rain checks, if we hit target for a week we wont run
+  targetTimeframeHours: Int! #expressed in number of hours, so a week would be 24*7
+  daySettings: [DaySetting] @manyToMany(relationName: "ZoneDays")
 }
 
-enum DayOfWeek {mon,tue,wed,thu,fri,sat,sun}
+enum DayOfWeek {
+  mon
+  tue
+  wed
+  thu
+  fri
+  sat
+  sun
+}
 
 #Need to account for how we save the day before forcast
 

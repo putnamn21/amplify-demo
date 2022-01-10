@@ -1,17 +1,24 @@
+import React from 'react'
 import {
     Routes,
-    Route
+    Route,
+    Outlet
 } from 'react-router-dom'
-import ProfileList from './containers/ProfileList'
+import Modal from './components/Modal'
 import SprinklerProfileForm from './containers/SprinklerProfileForm'
+import ProfileList from './containers/ProfileList'
 import ZoneList from './containers/ZoneList'
 
 export default function Router() {
     return (
         <Routes>
-            <Route path="/" element={<ProfileList />} />
-            <Route path="/addSprinklerProfile" element={<SprinklerProfileForm />} />
             <Route path="/zones" element={<ZoneList />} />
+            <Route path="/*" element={<ProfileList />}>
+                <Route element={<Modal><Outlet/></Modal>}>
+                    <Route path="add/*" element={<SprinklerProfileForm />} />
+                    <Route path="edit/:id/*" element={<SprinklerProfileForm />} />
+                </Route>
+            </Route>
         </Routes>
     )
 }

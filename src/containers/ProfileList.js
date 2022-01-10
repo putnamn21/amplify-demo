@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 import { listSprinklerProfiles } from '../graphql/queries'
+
 import FetchData from '../components/FetchData'
 import {
     Flex,
@@ -19,10 +20,10 @@ export default function ProfileList() {
     return (
         <>
             <Flex margin="0 0 1rem">
-                <Button onClick={() => navigate('/AddSprinklerProfile')}>
+                <Button onClick={() => navigate('/add')}>
                     Add Sprinkler Profile
                 </Button>
-                <Button onClick={() => navigate('/ManageZones')}>
+                <Button onClick={() => navigate('/zones')}>
                     Add Zone
                 </Button>
             </Flex>
@@ -56,6 +57,7 @@ export default function ProfileList() {
                     )
                 }}
             </FetchData>
+            <Outlet />
         </>
     )
 }

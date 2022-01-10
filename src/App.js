@@ -1,3 +1,4 @@
+import React from 'react'
 import './App.css';
 import { 
   withAuthenticator, 
@@ -7,9 +8,11 @@ import {
   View
 } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css';
+import {useNavigate} from 'react-router-dom'
 import Router from './Router'
 
 function App() {
+  const navigate = useNavigate()
   return (
       <Authenticator>
       {({ signOut, user }) => (
@@ -28,6 +31,14 @@ function App() {
               >
                 <span>
                   Hello {user.attributes.email}
+                </span>
+                <span>
+                  <Button onClick={() => navigate('/')}>
+                      Sprinkler Profiles
+                  </Button>
+                  <Button onClick={() => navigate('/zones')}>
+                      Zones
+                  </Button>
                 </span>
                 <Button onClick={signOut} variation="link">
                     Sign out
