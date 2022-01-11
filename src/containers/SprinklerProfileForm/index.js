@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom'
 import ProfileForm from './ProfileForm'
 import DayForm from './DayForm'
+import ZoneForm from './ZoneForm'
 import { DAYS } from '../../constants'
 
 const initialState = {
@@ -26,9 +27,11 @@ function reducer(state, action){
     console.log(action)
     switch(action.type){
         case 'profile_update':
+        case 'day_settings_update':
+        case 'zone_settings_update':
             return {...state, ...action.payload}
         default:
-            return state
+            console.error('Action did not match switch case', action)
     }
 }
 
@@ -46,7 +49,7 @@ export default function SprinklerProfileForm(){
         <Routes>
             <Route index element={<ProfileForm store={store} dispatch={dispatch} navigate={navigate} />} />
             <Route path="days" element={<DayForm store={store} dispatch={dispatch} navigate={navigate} />} />
-            <Route path="zones" element={<div>Hello Zones</div>}/>
+            <Route path="zones" element={<ZoneForm store={store} dispatch={dispatch} navigate={navigate} />}/>
         </Routes>
     )
 }

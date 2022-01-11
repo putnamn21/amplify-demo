@@ -39,6 +39,7 @@ type ZoneSetting
   @model
   @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
   zone: Zone! @hasOne #the zone that should be run
+  active: Boolean! @default(value: "false")
   runMinutes: Int! #how long it should run
   runCycles: Int! #how many times it runs in a day
   targetInches: Float! #used during rain checks, if we hit target for a week we wont run

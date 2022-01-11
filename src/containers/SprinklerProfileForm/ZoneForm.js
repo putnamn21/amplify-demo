@@ -1,74 +1,144 @@
-
-
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import {
     TextField,
     CheckboxField,
     Button,
     Flex,
     Heading,
+    Loader,
+    Divider,
+    View
 } from '@aws-amplify/ui-react'
+import _sortBy from 'lodash/sortBy'
 
-export default function ProfileForm({store, dispatch}){
-    const { register, handleSubmit, formState: { errors }, control } = useForm({
+import FetchData from '../../components/FetchData'
+import { listZones } from "../../graphql/queries";
+
+function DayFormContent({zoneSettings, daySettings, dispatch, navigate}){
+
+    const onSubmit = data => {
+        dispatch({
+            type: 'zone_settings_update',
+            payload: data
+        })
+    }
+
+    const { register, handleSubmit, formState: {errors}, control, watch } = useForm({
         defaultValues: {
-            zones: store.zones
+            zoneSettings
         }
     })
-    const { fields, append, remove, } = useFieldArray({
+        
+    const { fields } = useFieldArray({
         control,
         name: "zoneSettings"
     })
-    const addDayConfiguration = () => {
-        const day = getValues('_dayPreset')
-        append({
-            day,
-            active: false,
-            startTime: ''
-        })
-    }
-    useEffect(() => {
-        resetField('_dayPreset', {
-            defaultValue: firstOption
-        })
-    }, [firstOption, resetField])
-    const onSubmit = data => console.log(data)
-    return(
-         <Flex as="form" onSubmit={handleSubmit(onSubmit)} wrap="wrap">
-            <Flex flex="1 1 16rem" direction="column" >
-                <Heading level={3}>{store.name} Zones</Heading>
-                    {fields.map((field, index) => {
-                        return (
-                            <Flex as="section" direction="column" key={field.id}>
-                                <Flex justifyContent="space-between" alignContent="center">
-                                    <Heading level={5}>{day}</Heading>
-                                    <Flex wrap="nowrap" alignContent="center">
-                                        <CheckboxField label="Active" {...register(`daySettings.${index}.active`)} />
-                                        <Button size="small" onClick={() => remove(index)}>Delete</Button>
-                                    </Flex>
-                                </Flex>
-                                <Flex alignItems="flex-start" width="100%">
-                                    <TextField label="Start Time" {...register(`daySettings.${index}.startTime`)} />
-                                    <TextField label="Number of Cycles" {...register(`daySettings.${index}.numberOfCycles`)} type="number" />
-                                    <TextField label="Time Between Cycles" {...register(`daySettings.${index}.timeBetweenCycles`)} type="number" />
-                                </Flex>
-                                <Divider />
+
+    return (
+        <Flex as="form" direction="column" maxWidth="100vw" width="20rem" onSubmit={handleSubmit(onSubmit)}> 
+            {fields.map((field, index)=> {
+
+                const active = watch(`zoneSettings.${index}.active`)
+
+                return (
+                    <Flex as="section" direction="column" key={field.zone.zoneNumber}>
+                        <Flex justifyContent="space-between" alignContent="center">
+                            <Heading 
+                                color={active ? 'var(--amplify-components-heading-color)': 'var(--amplify-grey)' } 
+                                level={active ? 5 : 6}>
+                                    {field.zone.zoneNumber} - {field.zone.name}
+                            </Heading>
+                            <Flex wrap="nowrap" alignContent="center">
+                                <CheckboxField label="Active" {...register(`zoneSettings.${index}.active`)} />
                             </Flex>
-                        )
-                    })}
-                {/* Once we reach 7 fields we have a config for each day */}
-                {fields.length !== 7 &&
-                    <Flex>
-                        <SelectField {...register('_dayPreset')}>
-                            {dayOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                        </SelectField>
-                        <Button onClick={addDayConfiguration}>Add Day Configuration</Button>
+                        </Flex>
+                        {active && 
+                            <>
+                                <TextField 
+                                    label="Run Minutes" 
+                                    type="number"
+                                    hasError={!!errors.zoneSettings?.[index]?.runMinutes}
+                                    errorMessage="Must be a whole number."
+                                    {...register(`zoneSettings.${index}.runMinutes`, {
+                                        required: 'This field is required',
+                                        valueAsNumber: true,
+                                        validate: Number.isInteger
+                                    })}
+                                />
+                                    <TextField 
+                                    label="Run Cycles" 
+                                    type="number"
+                                    hasError={!!errors.zoneSettings?.[index]?.runCycles}
+                                    errorMessage="Must be a whole number."
+                                    {...register(`zoneSettings.${index}.runCycles`, {
+                                        required: 'This field is required',
+                                        valueAsNumber: true,
+                                        validate: Number.isInteger
+                                    })}
+                                />
+                                <TextField 
+                                    label="Targeted Water Amount (inches)" 
+                                    type="number"
+                                    step="0.1"
+                                    hasError={!!errors.zoneSettings?.[index]?.targetInches}
+                                    errorMessage="This field is required."
+                                    {...register(`zoneSettings.${index}.targetInches`, {
+                                        required: 'This field is required',
+                                        valueAsNumber: true
+                                    })}
+                                />
+                                <TextField 
+                                    label="Targeted Water Amount Timeframe (hours)" 
+                                    type="number"
+                                    hasError={!!errors.zoneSettings?.[index]?.targetTimeframeHours}
+                                    errorMessage="Must be a whole number."
+                                    {...register(`zoneSettings.${index}.targetTimeframeHours`, {
+                                        required: 'This field is required',
+                                        valueAsNumber: true,
+                                        validate: Number.isInteger
+                                    })}
+                                />
+                            </>
+                        }
+                        <Divider/>
                     </Flex>
-                }
-            </Flex>
-            <Flex flex="1 1 100%" minWidth="100%">
-                <Button type="submit">Next</Button>
-            </Flex>
+                )
+            })}
+            <Button type="submit">Save All</Button>
         </Flex>
+    )
+}
+
+export default function DayForm({store, dispatch, navigate}){
+    return(
+        <>
+            <Heading level={3}>Zone Settings</Heading>
+            {store.zoneSettings.length 
+                ? <DayFormContent 
+                    zoneSettings={store.zoneSettings}
+                    daySettings={store.daySettings}
+                    dispatch={dispatch}
+                    navigate={navigate}/>
+                : <FetchData
+                    graphQLMethod={listZones}
+                    LoaderComponent={() => <View width="20rem"><Loader variation="linear" /></View>}
+                    ErrorComponent={({ error }) => `Error: ${error.message}`}>
+                        {({data}) => 
+                            <DayFormContent
+                                zoneSettings={_sortBy((data.data?.listZones?.items || []), 'zoneNumber').map(zone => ({
+                                    zone,
+                                    active: false,
+                                    runMinutes: 0,
+                                    runCycles: 0,
+                                    targetInches: 0,
+                                    targetTimeFrameHours: 0,
+                                    daySettings: []
+                                }))}
+                                daySettings={store.daySettings}
+                                dispatch={dispatch}
+                                navigate={navigate}/>
+                        }
+                </FetchData>}
+        </>
     )
 }

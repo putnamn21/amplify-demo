@@ -24,15 +24,11 @@ export default function ProfileForm({store, dispatch, navigate}){
     }
 
     return (
-         <Flex as="form" onSubmit={handleSubmit(onSubmit)} wrap="wrap">
-            <Flex flex="1 1 16rem" direction="column" >
-                <Heading level={3}>Profile Settings</Heading>
-                <TextField label="Name" {...register("name", { required: 'A value is required.'})} hasError={!!errors.name} errorMessage={errors.name?.message} />
-                <CheckboxField label="Active" {...register("active")} />
-            </Flex>
-            <Flex flex="1 1 100%" minWidth="100%">
-                <Button type="submit">Next</Button>
-            </Flex>
+         <Flex as="form" direction="column" maxWidth="100vw" width="20rem" onSubmit={handleSubmit(onSubmit)}>
+            <Heading level={3}>Profile Settings</Heading>
+            <TextField label="Name" {...register("name", { required: 'A value is required.'})} hasError={!!errors.name} errorMessage={errors.name?.message} />
+            <CheckboxField label="Active" {...register("active")} />
+            <Button type="submit">Next</Button>
         </Flex>
     )
 }
