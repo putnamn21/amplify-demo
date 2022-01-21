@@ -10,7 +10,7 @@ import {
 import '@aws-amplify/ui-react/styles.css';
 import {useNavigate} from 'react-router-dom'
 import Router from './Router'
-
+//test comment
 function App() {
   const navigate = useNavigate()
   return (
@@ -50,7 +50,7 @@ function App() {
                 padding="1rem">
                   <Router/>
               </View>
-              <Flex as="footer" padding="1rem" backgroundColor="var(--amplify-tertiary-color)">
+              <Flex as="footer" padding="1rem" backgroundColor="var(--amplify-tertiary-color)">``
                 Im a footer
               </Flex>
           </Flex>
