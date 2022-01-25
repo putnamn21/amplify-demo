@@ -9,6 +9,8 @@ import config from './aws-exports';
 import {BrowserRouter} from 'react-router-dom'
 Amplify.configure(config);
 
+//test commit
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
